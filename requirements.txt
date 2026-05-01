@@ -1,0 +1,29 @@
+# AgentOps AI Platform - Python Dependencies
+# Install with: pip install -r requirements.txt
+
+# Core Framework
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+pydantic>=2.5.0
+
+# LangChain & LangGraph
+langchain>=0.1.0
+langchain-core>=0.1.0
+langchain-google-genai>=1.0.0
+langgraph>=0.0.28
+
+# Vector Database (for memory retrieval)
+chromadb>=1.0.0
+
+# Environment & Configuration
+python-dotenv>=1.0.0
+
+# HTTP Client (for external APIs)
+httpx>=0.26.0
+
+# Tools (for web search and other external tools)
+duckduckgo-search>=4.0.0
+
+# Observability
+langsmith>=0.1.0
+langfuse>=2.0.0
