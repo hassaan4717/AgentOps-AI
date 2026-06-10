@@ -15,6 +15,7 @@ IMPORTANT DESIGN PRINCIPLES:
 from __future__ import annotations
 
 import json
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -381,7 +382,8 @@ class MemoryRecord(BaseModel):
 
 # Define the memory file path relative to this module
 # This ensures the file is always created in the /memory directory
-MEMORY_FILE = Path(__file__).parent / "memory.json"
+DATA_DIR = Path(os.environ.get("AGENTOPS_DATA_DIR", Path(__file__).parent))
+MEMORY_FILE = DATA_DIR / "memory.json"
 
 
 def save_memory(record: MemoryRecord) -> bool:

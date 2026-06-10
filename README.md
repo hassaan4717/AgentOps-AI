@@ -112,6 +112,26 @@ OFFLINE_MODE=1
 
 Useful for UI / API testing without burning API quota.
 
+### Run with Docker
+
+Prerequisites: Docker Desktop (or Docker Engine) with the Compose plugin.
+
+```bash
+cp .env.example .env
+# Add GOOGLE_API_KEY to .env, or set OFFLINE_MODE=1 for offline mode
+docker compose up --build
+```
+
+Open http://localhost:3000 for the UI, http://localhost:8000 for the API, and
+http://localhost:8000/docs for Swagger. The API address compiled into the UI
+defaults to `http://localhost:8000`; set `NEXT_PUBLIC_API_URL` in `.env` if the
+browser needs to reach the API at a different host or port, then rebuild with
+`docker compose up --build`.
+
+Stop the services with `docker compose down`. Application memory is stored in
+the `agentops_data` Docker volume and survives container rebuilds. To delete it,
+run `docker compose down --volumes`.
+
 ---
 
 ## Environment variables
@@ -124,6 +144,7 @@ Useful for UI / API testing without burning API quota.
 | `GEMINI_EXECUTION_MODEL` | No | Execution agent model |
 | `GEMINI_EVALUATOR_MODEL` | No | Evaluator agent model |
 | `OFFLINE_MODE` | No | `1` skips live LLM calls |
+| `NEXT_PUBLIC_API_URL` | No | Backend URL used by the frontend (Docker build-time setting) |
 | `OBSERVABILITY_ENABLED` | No | `1` enables LangSmith + Langfuse |
 | `LANGSMITH_API_KEY` | No | LangSmith tracing |
 | `LANGSMITH_PROJECT` | No | LangSmith project name |

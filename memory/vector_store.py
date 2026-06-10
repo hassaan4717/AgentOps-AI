@@ -142,7 +142,8 @@ from memory.memory_store import MemoryRecord, load_all_memories
 # - Uses SQLite under the hood for metadata
 # - Stores vectors in efficient binary format
 # - All data stays local (no cloud storage)
-CHROMA_DB_DIR = Path(__file__).parent / "chroma_db"
+DATA_DIR = Path(os.environ.get("AGENTOPS_DATA_DIR", Path(__file__).parent))
+CHROMA_DB_DIR = DATA_DIR / "chroma_db"
 
 # Chroma collection name for memory entries
 # Collections are like "tables" in traditional databases

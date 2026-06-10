@@ -1,0 +1,39 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    env_file:
+      - .env
+    environment:
+      AGENTOPS_DATA_DIR: /app/data
+    ports:
+      - "8000:8000"
+    volumes:
+      - agentops_data:/app/data
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - from urllib.request import urlopen; urlopen('http://127.0.0.1:8000/health')
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8000}
+    ports:
+      - "3000:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  agentops_data:
